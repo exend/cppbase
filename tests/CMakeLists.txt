@@ -7,6 +7,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(base_tests
+	test_percent_coding.cpp
 	test_thread_pool.cpp
 	test_url.cpp
 )

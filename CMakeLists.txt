@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 add_library(${PROJECT_NAME} STATIC
 	src/concurrent/thread_pool.cpp
 	src/util/mime.cpp
+	src/util/percent_coding.cpp
 	src/util/string.cpp
 	src/util/url.cpp
 )
