@@ -2,6 +2,7 @@
 #define C357_BASE_CONCURRENT_EXECUTOR_HPP
 
 #include <functional>
+#include <memory>
 
 namespace c357::base::concurrent {
 

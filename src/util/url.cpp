@@ -1,5 +1,6 @@
 #include <c357/base/util/url.hpp>
 #include <c357/base/util/string.hpp>
+#include <cstring>
 #include <cctype>
 #include <charconv>
 

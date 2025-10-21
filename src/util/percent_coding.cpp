@@ -1,4 +1,6 @@
 #include <c357/base/util/percent_coding.hpp>
+#include <array>
+#include <cstdint>
 
 using namespace std;
 using namespace c357::base;
@@ -15,7 +17,7 @@ constexpr array<uint8_t, 0x100> hex_lookup = [] {
 }();
 
 constexpr array<uint8_t, 0x10> hex_chars = [] {
-	array<uint8_t, 0x10> table;
+	array<uint8_t, 0x10> table {};
 	for (uint8_t i = 0; i <= 9; ++i)
 		table[i] = i + '0';
 	for (uint8_t i = 0xA; i <= 0xF; ++i)
@@ -50,7 +52,8 @@ constexpr uint8_t decode_hex_pair(uint8_t first, uint8_t second) noexcept
 	return first << 4 | second;
 }
 
-string util::percent_encode(const string &in, const std::string_view &safe)
+template<typename T>
+static string percent_encode(const T &in, const std::string_view &safe)
 {
 	string out;
 	out.reserve(in.size() * 3);
@@ -66,12 +69,23 @@ string util::percent_encode(const string &in, const std::string_view &safe)
 	return out;
 }
 
-string util::percent_encode(const string &in)
+string util::percent_encode(const std::string &in, const std::string_view &safe)
 {
-	return percent_encode(in, "");
+	return ::percent_encode(in, safe);
 }
 
-string util::percent_decode(const string &in)
+string util::percent_encode(const std::string_view &in, const std::string_view &safe)
+{
+	return ::percent_encode(in, safe);
+}
+
+string util::percent_encode(const string &in)
+{
+	return ::percent_encode(in, "");
+}
+
+template <typename T>
+static string percent_decode(const T &in)
 {
 	string out;
 	out.reserve(in.size());
@@ -87,4 +101,14 @@ string util::percent_decode(const string &in)
 		out.push_back(in[i]);
 	}
 	return out;
+}
+
+string util::percent_decode(const string &in)
+{
+	return ::percent_decode(in);
+}
+
+string util::percent_decode(const string_view &in)
+{
+	return ::percent_decode(in);
 }

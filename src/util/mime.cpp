@@ -1,15 +1,18 @@
 #include <c357/base/util/mime.hpp>
 #include <unordered_map>
+#include <algorithm>
 
 using namespace std;
-using namespace c357::base::util;
+using namespace c357::base;
 
 extern const unordered_map<string, string> mime_types;
-const std::string default_mime = "application/octet-stream";
+const string default_mime = "application/octet-stream";
 
-const std::string &c357::base::util::mime_from_ext(std::string ext)
+const string &util::mime_from_ext(string ext)
 {
-	ranges::transform(ext, ext.begin(), tolower);
+	ranges::transform(ext, ext.begin(), [] (unsigned char c) {
+		return tolower(c);
+	});
 	auto it = mime_types.find(ext);
 	if (it != mime_types.end())
 		return it->second;
